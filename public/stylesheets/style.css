@@ -1,0 +1,53 @@
+/* tag selector */
+body,html{
+    padding: 0;
+    margin: 0;
+}
+
+/* class name selector */
+.my-logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo-text {
+    background-color: #60b258;
+    border-radius: 10px;
+    color: white;
+    height: 40px;
+    width: 40px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-form {
+    border: 1px dashed #dcdee2;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.my-footer {
+    background-color: #212121;
+}
+
+/* id selector */
+#navbarSupportedContent{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.form-group{
+    margin: 10px;
+}
+.my-textarea textarea{
+    height: 200px;
+}

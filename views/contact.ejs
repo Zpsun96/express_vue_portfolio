@@ -1,0 +1,109 @@
+<% include partials/header.ejs %>
+<main id="app">
+    <div class="position-relative overflow-hidden p-3 p-md-2 m-md-2 text-center">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 fw-normal">Contact me</h1>
+            <p class="lead fw-normal">I am good at web development, robot programming, mobile apps development, database
+                design and so on.</p>
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+    <div class="py-5 bg-light">
+        <section class="py-5  container">
+            <!--            Contact Information area-->
+            <h3>Contact Information</h3>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
+                            Email
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                         aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            <strong>tigersunzp@gmail.com</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseTwo">
+                            Address
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            <strong>141 john st. Lowell Ma, 01852 P. R. U.S.A</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
+                            Phone number
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingThree">
+                        <div class="accordion-body">
+                            <strong>+1-857-265-4312</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!--            Contact Form area-->
+            <h3>Contact Me</h3>
+            <form class="my-form">
+
+                <div class="form-floating mb-3 my-textarea">
+                    <textarea v-model="message" type="text" class="form-control" id="message"
+                              placeholder="Messages"></textarea>
+                    <label for="message">Message</label>
+                </div>
+                <button id="submitBtn" :disabled="isValid()" @click="submitForm()" type="button"
+                        class="btn btn-primary">
+                    Send
+                </button>
+            </form>
+            <br><br><br>
+        </section>
+    </div>
+    <br><br><br>
+</main>
+
+<% include partials/footer.ejs %>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      message: '',
+      disabled: false,
+    },
+    methods: {
+      isValid () {
+        const { message } = this;
+        let isLogin=this.isLogin();
+        return !(isLogin && message);
+      },
+      isLogin () {
+        let user = localStorage.getItem("user");
+        return user !== 'null';
+      },
+      submitForm () {
+        if (this.isValid())
+          alert("We have received your contact and will reply to you as soon as possible！")
+      }
+    }
+  })
+
+</script>

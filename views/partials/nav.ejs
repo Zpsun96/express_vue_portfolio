@@ -1,0 +1,272 @@
+<div id="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home">
+                <div class="my-logo">
+                    <div class="d-flex flex-row justify-content-center align-items-center logo-text ">P</div>
+                    ortfolio
+                </div>
+            </a>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link <%= router === 'home' ? 'active' : '' %>" aria-current="page"
+                           href="./home">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link <%= router === 'projects' ? 'active' : '' %>" aria-current="page"
+                           href="./projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= router === 'services' ? 'active' : '' %>" aria-current="page"
+                           href="./services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= router === 'about' ? 'active' : '' %>" aria-current="page"
+                           href="./about">About
+                            Me</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= router === 'contact' ? 'active' : '' %>" aria-current="page"
+                           href="./contact">Contact</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <ul v-if="isLogged" class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li>
+                            <button type="button" class="btn nav-link" data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">
+                                Hello,{{userInfo.first_name}} {{userInfo.last_name}}
+                            </button>
+                        </li>
+                        <li>
+                            <button @click="logout" type="button" class="btn nav-link" data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">
+                                Logout
+                            </button>
+                        </li>
+                    </ul>
+                    <ul v-else class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li>
+                            <button type="button" class="btn nav-link" data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">
+                                Login
+                            </button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div>
+        <!-- Login modal -->
+        <div class="modal fade" id="loginModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Login</h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="login_email">Email</label>
+                                <input v-model="loginForm.email" name="email" type="email" class="form-control"
+                                       id="login_email" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input v-model="loginForm.password" name="password" type="password" class="form-control"
+                                       id="password"
+                                       placeholder="Password">
+                            </div>
+                            <button :disabled="loginValidate()" type="button" @click="login"
+                                    class="btn btn-primary form-control">Sign in
+                            </button>
+                        </form>
+                        <div class="text-center">or
+                            <a type="button" class="btn nav-link" data-bs-toggle="modal"
+                               data-bs-target="#registerModal">
+                                create an account
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- End modal -->
+
+        <!-- Register modal -->
+        <div class="modal fade" id="registerModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Register</h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form method="POST">
+                            <div class="form-group">
+                                <label for="register_email">Email</label>
+                                <input v-model="registerForm.email" name="email" type="email" class="form-control"
+                                       id="register_email"
+                                       placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="register_password">Password</label>
+                                <input v-model="registerForm.password" name="password" type="password"
+                                       class="form-control"
+                                       id="register_password"
+                                       placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input v-model="registerForm.first_name" name="firstName" type="text"
+                                       class="form-control"
+                                       id="firstName"
+                                       placeholder="First Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input v-model="registerForm.last_name" name="lastName" type="text" class="form-control"
+                                       id="lastName"
+                                       placeholder="Last Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number</label>
+                                <input v-model="registerForm.phone" name="phoneNumber" type="text" class="form-control"
+                                       id="phoneNumber"
+                                       placeholder="Phone Number">
+                            </div>
+
+                            <button :disabled="registerValidate()" @click="register" type="button"
+                                    class="btn btn-primary form-control">Sign up
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- End modal -->
+    </div>
+</div>
+<script>
+  new Vue({
+    el: '#header',
+    data: {
+      userInfo: {},
+      isLogged: false,
+
+      loginForm: {
+        email: '',
+        password: ''
+      },
+      registerForm: {
+        email: '',
+        password: '',
+        first_name: '',
+        last_name: '',
+        phone: ''
+      },
+      disabled: false,
+    },
+    mounted: function () {
+      this.getUserInfo();
+    },
+    methods: {
+      setLogin (email) {
+        localStorage.setItem("user", email)
+      },
+      logout () {
+        localStorage.setItem("user", null)
+        window.location.href = "/"
+      },
+      loginValidate () {
+        return !(this.loginForm.email && this.loginForm.password);
+      },
+      registerValidate () {
+        let {
+          email,
+          password,
+          first_name,
+          last_name,
+          phone
+        } = this.registerForm;
+        return !(email && password && first_name && last_name && phone);
+      },
+      isLogin () {
+        let user = localStorage.getItem("user");
+        this.isLogged = user !== 'null';
+        return this.isLogged;
+      },
+      getUserInfo () {
+        if (this.isLogin()) {
+          let email = localStorage.getItem("user")
+          fetch(`/users/info`, {
+            method: "post",
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+          }).then(res => res.json()).then(data => {
+            console.log(data)
+            if (data.error) {
+            } else {
+              this.userInfo = data
+            }
+          })
+        }
+
+      },
+      login () {
+        let { email, password } = this.loginForm;
+        if (email && password) {
+          fetch('/users/auth', {
+            method: "post",
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          }).then(res => res.json()).then(data => {
+            if (data.error) {
+              alert(data.error)
+            } else {
+              this.setLogin(email)
+              window.location.href = "/"
+            }
+          })
+        }
+      },
+      register () {
+        let {
+          email,
+          password,
+          first_name,
+          last_name,
+          phone
+        } = this.registerForm;
+        fetch('/users/register', {
+          method: "post",
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({ email, password, first_name, last_name, phone })
+        }).then(res => res.json()).then(data => {
+          if (data.error) {
+            alert(data.error)
+          } else {
+            this.setLogin(email)
+            window.location.href = "/"
+          }
+        })
+      }
+    }
+  })
+</script>
